@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { COLORS, RADIUS, SPACING } from '../constants/theme';
 
-export const CustomButton = ({ title, onPress, variant = 'primary', isLoading }: any) => {
+export const CustomButton = ({ title, onPress, variant = 'primary', isLoading, testID }: any) => {
   const isPrimary = variant === 'primary';
   const isOutlined = variant === 'outlined';
   const isSecondary = variant === 'secondary';
@@ -23,6 +23,7 @@ export const CustomButton = ({ title, onPress, variant = 'primary', isLoading }:
 
   return (
     <TouchableOpacity
+      testID={testID}
       style={containerStyle}
       onPress={onPress}
       activeOpacity={0.8}

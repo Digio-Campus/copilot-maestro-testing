@@ -1,0 +1,29 @@
+{
+    "project_info": {
+        "project_number": "472352846658",
+        "project_id": "prueba-befc6",
+        "storage_bucket": "prueba-befc6.firebasestorage.app"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:472352846658:android:c3e964ea5645f20ffb8edb",
+                "android_client_info": {
+                    "package_name": "com.copilotmaestro.testapp"
+                }
+            },
+            "oauth_client": [],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyAT-DkTrKNYU7_n34in085SsR-MvKqLEd0"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": []
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}

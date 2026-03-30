@@ -6,6 +6,8 @@ import { COLORS, SHADOWS, RADIUS, SPACING } from '../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 
 export const LoginScreen = ({ email, setEmail, password, setPassword, handleLogin, isLoading, navigateTo, errorMessage }: any) => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
   // Standardized Naming for programmatic analysis
   const emailInput = (
     <CustomInput testID="login_email_input" 
@@ -21,9 +23,18 @@ export const LoginScreen = ({ email, setEmail, password, setPassword, handleLogi
     <CustomInput testID="login_password_input" 
       label="Password" 
       placeholder="6+ characters" 
-      secureTextEntry 
+      secureTextEntry={!showPassword}
       value={password} 
       onChangeText={setPassword} 
+      rightElement={
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <Ionicons 
+            name={showPassword ? "eye-off" : "eye"} 
+            size={24} 
+            color={COLORS.textLight} 
+          />
+        </TouchableOpacity>
+      }
     />
   );
 

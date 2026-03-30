@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Animated } from 'react-native';
 import { COLORS, SHADOWS, RADIUS, SPACING } from '../constants/theme';
 
-export const CustomInput = ({ label, placeholder, secureTextEntry, value, onChangeText, keyboardType }: any) => {
+export const CustomInput = ({ label, placeholder, secureTextEntry, value, onChangeText, keyboardType, testID, rightElement }: any) => {
   const [isFocused, setIsFocused] = useState(false);
   
   return (
@@ -11,11 +11,13 @@ export const CustomInput = ({ label, placeholder, secureTextEntry, value, onChan
       <View 
         style={[
           styles.inputWrapper, 
-          isFocused ? styles.inputWrapperFocused : styles.inputWrapperBlurred
+          isFocused ? styles.inputWrapperFocused : styles.inputWrapperBlurred,
+          { flexDirection: 'row', alignItems: 'center' }
         ]}
       >
         <TextInput
-          style={styles.input}
+          testID={testID}
+          style={[styles.input, { flex: 1 }]}
           placeholder={placeholder}
           placeholderTextColor={COLORS.textLight}
           secureTextEntry={secureTextEntry}
@@ -26,6 +28,11 @@ export const CustomInput = ({ label, placeholder, secureTextEntry, value, onChan
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />
+        {rightElement && (
+          <View style={styles.rightElement}>
+            {rightElement}
+          </View>
+        )}
       </View>
     </View>
   );
@@ -63,5 +70,8 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     color: COLORS.text,
     fontWeight: '500',
+  },
+  rightElement: {
+    marginLeft: SPACING.sm,
   },
 });

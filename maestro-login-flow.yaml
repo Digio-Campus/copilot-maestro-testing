@@ -1,0 +1,21 @@
+appId: com.example.app
+---
+- launchApp
+- tapOn: "Email Address"
+- inputText: "invalid@email"
+- tapOn: "Sign In"
+- assertVisible: "Please enter a valid email address."
+- tapOn: "Email Address"
+- clearText
+- inputText: "test@example.com"
+- tapOn: "Password"
+- inputText: "123"
+- tapOn: "Sign In"
+- assertVisible: "Password must be at least 6 characters."
+- tapOn: "Password"
+- clearText
+- inputText: "password123"
+- tapOn: "flash" # Toggling eye icon (Ionicons name)
+- assertVisible: "password123"
+- tapOn: "Sign In"
+# Add more assertions depending on final destination

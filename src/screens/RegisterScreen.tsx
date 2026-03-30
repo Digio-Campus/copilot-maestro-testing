@@ -6,6 +6,8 @@ import { COLORS, SHADOWS, RADIUS, SPACING } from '../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 
 export const RegisterScreen = ({ name, setName, email, setEmail, password, setPassword, handleRegister, isLoading, navigateTo, errorMessage, successMessage }: any) => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
   // Standardized Naming for programmatic analysis
   const nameInput = (
     <CustomInput testID="register_full_input" label="Full Name" placeholder="Jane Doe" value={name} onChangeText={setName} />
@@ -25,9 +27,18 @@ export const RegisterScreen = ({ name, setName, email, setEmail, password, setPa
     <CustomInput testID="register_password_input" 
       label="Password" 
       placeholder="6+ characters" 
-      secureTextEntry 
+      secureTextEntry={!showPassword}
       value={password} 
       onChangeText={setPassword} 
+      rightElement={
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <Ionicons 
+            name={showPassword ? "eye-off" : "eye"} 
+            size={24} 
+            color={COLORS.textLight} 
+          />
+        </TouchableOpacity>
+      }
     />
   );
 

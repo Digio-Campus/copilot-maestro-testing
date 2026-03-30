@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import { COLORS, SHADOWS, RADIUS, SPACING } from '../constants/theme';
 
 export const HomeScreen = ({ email, items, logout, toggleLike, removeItem, addNewItem }: any) => {
@@ -15,6 +16,39 @@ export const HomeScreen = ({ email, items, logout, toggleLike, removeItem, addNe
     <TouchableOpacity style={styles.quickAdd} onPress={addNewItem} activeOpacity={0.7}>
       <Ionicons name="add" size={20} color={COLORS.white} />
       <Text style={styles.quickAddText}>Add Item</Text>
+    </TouchableOpacity>
+  );
+
+  const handlePickImage = async () => {
+    try {
+      // CRITICAL: We are intentionally NOT checking for permissions here 
+      // to test the app's behavior when access is denied.
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images'],
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        console.log('Image picked:', result.assets[0].uri);
+      }
+    } catch (error: any) {
+      // Simulate a crash by throwing an unhandled error when permissions are missing
+      // or when the OS denies access.
+      throw new Error(`CRASH_SIMULATION: Image Picker failed - ${error.message}`);
+    }
+  };
+
+  const imagePickerButton = (
+    <TouchableOpacity 
+      style={[styles.quickAdd, { backgroundColor: COLORS.accent, marginLeft: SPACING.sm }]} 
+      onPress={handlePickImage} 
+      activeOpacity={0.7}
+      testID="image-picker-button"
+    >
+      <Ionicons name="image" size={20} color={COLORS.white} />
+      <Text style={styles.quickAddText}>Pick Image</Text>
     </TouchableOpacity>
   );
 
@@ -37,7 +71,10 @@ export const HomeScreen = ({ email, items, logout, toggleLike, removeItem, addNe
             <Text style={styles.statValue}>{items.length}</Text>
             <Text style={styles.statLabel}>Total Items</Text>
           </View>
-          {addItemButton}
+          <View style={{ flexDirection: 'row' }}>
+            {addItemButton}
+            {imagePickerButton}
+          </View>
         </View>
 
         <FlatList

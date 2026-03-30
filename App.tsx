@@ -45,39 +45,48 @@ export default function App() {
   };
 
   const validateAuth = () => {
-    if (!email.includes('@')) {
+    // Robust email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
       setErrorMessage('Please enter a valid email address.');
       return false;
     }
-    if (password.length < 6) {
+    
+    // Safety check for password length
+    const passLength = password?.length ?? 0;
+    if (passLength < 6) {
       setErrorMessage('Password must be at least 6 characters.');
       return false;
     }
     return true;
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!validateAuth()) return;
     
     setIsLoading(true);
     setErrorMessage('');
     
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      // Simulate API call using a Promise
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
       // Check against registered user
       if (!registeredUser) {
-        setErrorMessage('User not found. Please register first.');
-        return;
+        throw new Error('User not found. Please register first.');
       }
       
       if (email === registeredUser.email && password === registeredUser.password) {
         setLoggedInUser({ email: registeredUser.email });
         setCurrentScreen('home'); 
       } else {
-        setErrorMessage('Incorrect email or password.');
+        throw new Error('Incorrect email or password.');
       }
-    }, 1500);
+    } catch (error: any) {
+      setErrorMessage(error.message || 'An unexpected error occurred.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleRegister = () => {
